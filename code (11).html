@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO RAW Aloe Vera - Obnovte svou energii | BEWIT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #006837;
+            --secondary-green: #418f4e;
+            --accent-gold: #c3a137;
+            --text-dark: #2c3e50;
+            --text-light: #5a6a79;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --border-light: #e9ecef;
+            --danger-red: #d9534f; /* Červená pro časovač */
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-green);
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Hero Sekce --- */
+        .hero {
+            background: linear-gradient(to top, var(--bg-light) 0%, var(--white) 100%);
+            padding: 80px 0 60px 0;
+            text-align: center;
+        }
+        .hero .hero-image {
+            max-width: 280px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero .subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        /* --- Animované CTA tlačítko (úvodní) --- */
+        .hero .cta-button {
+            display: inline-block; padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 1.2rem;
+            font-weight: 700; color: var(--white); background: transparent; border: none; border-radius: 50px;
+            text-decoration: none; cursor: pointer; position: relative; overflow: hidden;
+            z-index: 1; transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hero .cta-button:hover {
+            transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 104, 55, 0.2);
+        }
+        .hero .cta-button::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 250%; height: 250%;
+            z-index: -2; transform: translate(-50%, -50%);
+            background: conic-gradient(transparent, var(--accent-gold), transparent 30%);
+            animation: spin 3s linear infinite;
+        }
+        .hero .cta-button::after {
+            content: ''; position: absolute; top: 2px; left: 2px; right: 2px; bottom: 2px;
+            background-color: var(--primary-green); border-radius: 50px; z-index: -1;
+        }
+        @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        .hero .cta-button-text { position: relative; z-index: 2; }
+        
+        /* --- Sekce Řešení & Video --- */
+        .solution-section { padding: 80px 0; background: var(--bg-light); }
+        .solution-section .container { display: flex; align-items: center; gap: 60px; }
+        .solution-image img { max-width: 450px; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .solution-text h2 { font-size: 2.8rem; margin-bottom: 20px; }
+        .solution-text p { font-size: 1.1rem; margin-bottom: 25px; }
+        .solution-text ul { list-style: none; padding-left: 0; }
+        .solution-text li { padding-left: 35px; position: relative; margin-bottom: 15px; font-size: 1.1rem; }
+        .solution-text li::before { content: '✔'; color: var(--primary-green); position: absolute; left: 0; font-weight: bold; font-size: 1.5rem; }
+        .video-section { padding: 80px 0; background-color: var(--white); text-align: center; }
+        .video-section h2 { font-size: 2.8rem; margin-bottom: 15px; }
+        .video-section .subtitle { font-size: 1.2rem; color: var(--text-light); max-width: 700px; margin: 0 auto 40px auto; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 900px; margin: 0 auto; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* --- Sekce Graf --- */
+        .graph-section { padding: 80px 0; background: var(--bg-light); text-align: center; }
+        .graph-section h2 { font-size: 2.8rem; max-width: 900px; margin: 0 auto 40px auto; }
+        .chart-container { width: 100%; max-width: 700px; margin: 0 auto; background: var(--white); padding: 40px; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.07); }
+        .chart-wrapper { position: relative; }
+        .chart-svg { overflow: visible; }
+        .chart-path { stroke: var(--primary-green); stroke-width: 5; fill: none; stroke-linecap: round; }
+        .chart-point { fill: var(--primary-green); }
+        .animated-point { fill: var(--secondary-green); stroke: var(--white); stroke-width: 3px; offset-path: path('M 50,180 C 150,180 300,50 550,50'); animation: moveAlongPath 4s ease-in-out infinite; }
+        @keyframes moveAlongPath { 0% { offset-distance: 0%; opacity: 1; } 90% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+        .axis { stroke: #d0d0d0; stroke-width: 2; }
+        .axis-label { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 600; fill: var(--text-light); }
+        .axis-label.y-axis-label { text-anchor: start; }
+
+        /* --- Sekce Kvalita a Testimoniály --- */
+        .quality-banner-section { padding: 60px 0; background-color: var(--primary-green); color: var(--white); }
+        .quality-banner-content { display: flex; align-items: center; justify-content: center; gap: 40px; text-align: left; }
+        .flag-image img { width: 120px; height: auto; border-radius: 8px; border: 3px solid rgba(255, 255, 255, 0.6); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .quality-text h2 { color: var(--white); font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+        .quality-text p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; }
+        .testimonial-section { padding: 80px 0; position: relative; overflow: hidden; background: var(--bg-light); }
+        .testimonial-section h2 { text-align: center; font-size: 2.8rem; color: var(--primary-green); margin-bottom: 40px; }
+        .testimonial-carousel { display: flex; width: calc(2 * (380px * 10)); animation: scroll 80s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-380px * 10)); } }
+        .testimonial-card { flex: 0 0 380px; margin: 0 20px; background: white; border: 1px solid var(--border-light); border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        .testimonial-card p { font-style: italic; margin-bottom: 20px; flex-grow: 1; }
+        .star-rating { display: flex; gap: 4px; margin-bottom: 15px; color: var(--accent-gold); }
+        .star-rating svg { width: 20px; height: 20px; fill: currentColor; }
+        .testimonial-author { display: flex; align-items: center; margin-top: auto; }
+        .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; object-fit: cover; }
+        .author-info strong { display: block; color: var(--primary-green); }
+
+        /* --- Sekce Ceník a Objednávka --- */
+        .cta-button {
+            display: inline-block; padding: 18px 30px; font-family: 'Montserrat', sans-serif; font-size: 1.1rem;
+            font-weight: 700; line-height: 1.5; color: var(--white); background-color: var(--primary-green);
+            border: none; border-radius: 50px; text-decoration: none; cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease; text-align: center;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 104, 55, 0.2); }
+        .savings-highlight { color: var(--accent-gold); font-size: 1.25em; font-weight: 800; vertical-align: -2px; }
+        .timer-wrapper { text-align: center; margin-bottom: 20px; }
+        .timer-text { color: var(--danger-red); font-weight: 700; font-size: 1rem; display: block; margin-bottom: 5px; }
+        .countdown-timer-display { color: var(--danger-red); font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 800; }
+        .pricing-section { padding: 80px 0; background: var(--white); }
+        .pricing-section h2 { text-align: center; font-size: 2.8rem; margin-bottom: 15px; }
+        .pricing-section .subtitle { text-align: center; font-size: 1.2rem; margin-bottom: 50px; color: var(--text-light); max-width: 700px; margin-left: auto; margin-right: auto; }
+        .pricing-grid { display: flex; justify-content: center; align-items: stretch; gap: 30px; flex-wrap: wrap; }
+        .pricing-card { display: flex; flex-direction: column; flex: 1; max-width: 420px; background: var(--white); border: 1px solid var(--border-light); border-radius: 15px; padding: 40px; text-align: center; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .pricing-card.recommended { border: 2px solid var(--primary-green); transform: scale(1.05); box-shadow: 0 10px 40px rgba(0, 104, 55, 0.15); }
+        .ribbon-wrapper { width: 150px; height: 150px; overflow: hidden; position: absolute; top: -1px; right: -1px; }
+        .ribbon-text { font-family: 'Montserrat', sans-serif; font-weight: bold; font-size: 1rem; color: #FFF; text-align: center; line-height: 35px; transform: rotate(45deg); width: 200px; display: block; background: var(--accent-gold); position: absolute; top: 35px; right: -35px; }
+        .pricing-card-content { display: flex; flex-direction: column; flex-grow: 1; }
+        .pricing-card h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .pricing-card .price { font-size: 3rem; font-weight: 800; font-family: 'Montserrat', sans-serif; color: var(--primary-green); margin-bottom: 5px; }
+        .pricing-card .price .old-price { font-size: 1.2rem; color: var(--text-light); text-decoration: line-through; font-weight: 400; }
+        .pricing-card .price-note { color: var(--text-light); margin-bottom: 30px; }
+        .pricing-card ul { list-style: none; text-align: left; margin-bottom: 40px; padding-left: 0; }
+        .pricing-card ul li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; }
+        .pricing-card ul li svg { width: 24px; height: 24px; color: var(--secondary-green); flex-shrink: 0; margin-top: 3px; }
+        .pricing-card ul li.disabled { color: #aaa; text-decoration: line-through; }
+        .pricing-card ul li.disabled svg { color: #ccc; }
+        .free-bottle-text { color: var(--secondary-green); font-weight: 700; }
+        .pricing-card .cta-button { margin-top: auto; }
+        .consultation-box { display: flex; align-items: center; gap: 30px; max-width: 700px; margin: 60px auto 0 auto; padding: 30px; background-color: #f8f9fa; border: 1px solid var(--border-light); border-radius: 15px; }
+        .consultation-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--white); box-shadow: 0 4px 10px rgba(0,0,0,0.1); flex-shrink: 0; }
+        .consultation-text h3 { font-size: 1.5rem; margin-bottom: 5px; }
+        .consultation-text p { color: var(--text-light); margin-bottom: 15px; }
+        .consultation-phone { display: flex; align-items: center; gap: 10px; }
+        .consultation-phone a { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text-dark); text-decoration: none; transition: color 0.2s; }
+        .consultation-phone a:hover { color: var(--primary-green); }
+        .consultation-phone svg { width: 28px; height: 28px; color: var(--primary-green); }
+        #order-form-section { padding: 80px 0; background: var(--bg-light); }
+        .form-container { max-width: 700px; margin: 0 auto; padding: 40px; background: var(--white); border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--accent-gold); }
+        .form-container h2 { font-size: 2.5rem; color: var(--primary-green); margin-bottom: 25px; }
+        .package-selector { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        .package-selector input[type="radio"] { display: none; }
+        .package-selector label { flex: 1; padding: 15px; border: 2px solid var(--border-light); border-radius: 10px; cursor: pointer; transition: all 0.2s ease; font-weight: 700; }
+        .package-selector input[type="radio"]:checked + label { background-color: #eafbf2; border-color: var(--primary-green); color: var(--primary-green); }
+        .price-summary { font-size: 1.8rem; margin-bottom: 30px; font-weight: 700; display: flex; align-items: baseline; justify-content: center; gap: 15px; flex-wrap: wrap;}
+        .price-summary .final-price { font-family: 'Montserrat', sans-serif; color: var(--primary-green); font-size: 2.2rem; font-weight: 800; }
+        .price-summary .old-price-summary { font-size: 1.4rem; color: var(--text-light); text-decoration: line-through; font-weight: 400; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .form-group { flex: 1; margin-bottom: 0; }
+        .form-group input { width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; font-family: 'Lato', sans-serif; transition: border-color 0.2s; }
+        .form-group input:focus { outline: none; border-color: var(--primary-green); }
+        .payment-methods { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; }
+        .payment-methods img { height: 24px; filter: grayscale(1); opacity: 0.7; }
+        .payment-methods span { font-weight: 600; font-size: 1.2rem; display: flex; align-items: center; gap: 5px; }
+        .form-container .cta-button { width: 100%; margin-bottom: 25px; }
+        .security-info { margin-top: 15px; font-size: 0.9rem; color: var(--text-light); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .security-info svg { width: 16px; height: 16px; color: var(--primary-green); flex-shrink: 0; }
+        .guarantee-info { margin-top: 10px; font-size: 0.9rem; color: var(--text-light); }
+        
+        /* --- Sekce Garance a FAQ --- */
+        .guarantee-section { padding: 80px 0; background: var(--primary-green); color: var(--white); }
+        .guarantee-box { display: flex; align-items: center; justify-content: center; gap: 40px; max-width: 800px; margin: 0 auto; }
+       /* --- .guarantee-seal { flex-shrink: 0; width: 180px; height: 180px; border: 4px solid var(--accent-gold); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .guarantee-seal svg { width: 60px; height: 60px; color: var(--accent-gold); margin-bottom: 10px; }
+        .guarantee-seal span { font-family: 'Montserrat', sans-serif; font-weight: 700; line-height: 1.2; font-size: 1.1rem; }--- */
+        .guarantee-text h3 { color: var(--white); font-size: 2rem; margin-bottom: 10px; }
+        .guarantee-text p { font-size: 1.1rem; opacity: 0.9; }
+        .faq-section { padding: 80px 0; background-color: var(--white); }
+        .faq-section h2 { text-align: center; font-size: 2.8rem; margin-bottom: 40px; }
+        .faq-container { max-width: 800px; margin: 0 auto; border: 1px solid var(--border-light); border-radius: 15px; overflow: hidden; }
+        .faq-item { border-bottom: 1px solid var(--border-light); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; padding: 20px 25px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text-dark); cursor: pointer; }
+        .faq-question:hover { background-color: var(--bg-light); }
+        .faq-icon { width: 24px; height: 24px; color: var(--primary-green); flex-shrink: 0; margin-left: 20px; transition: transform 0.3s ease; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out; padding: 0 25px; color: var(--text-light); line-height: 1.8; }
+        .faq-item.active .faq-answer { max-height: 300px; padding-top: 0; padding-bottom: 25px; transition: max-height 0.4s ease-in, padding 0.4s ease-in; }
+
+        /* --- Patička --- */
+        footer { background: var(--text-dark); color: var(--white); text-align: center; padding: 25px; font-size: 0.9rem; }
+        footer a { color: var(--accent-gold); }
+
+        /* --- Responzivita --- */
+        @media (max-width: 992px) {
+            .solution-section .container { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 900px) {
+            .pricing-grid { flex-direction: column; align-items: center; }
+            .pricing-card.recommended { transform: scale(1); }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; } .hero .subtitle { font-size: 1.2rem; }
+            h2 { font-size: 2.2rem !important; }
+            .solution-image img { max-width: 100%; }
+            .quality-banner-content { flex-direction: column; text-align: center; gap: 25px; }
+            .guarantee-box, .consultation-box { flex-direction: column; text-align: center; gap: 20px;}
+            .guarantee-text h3 { font-size: 1.8rem; }
+            .faq-question { font-size: 1rem; padding: 15px 20px; }
+            .chart-container { padding: 30px 20px; }
+            .axis-label { font-size: 12px; }
+        }
+        @media (max-width: 600px) {
+            .consultation-phone { justify-content: center; }
+            .form-row { flex-direction: column; }
+            .form-group { margin-bottom: 20px; }
+            .form-group:last-child { margin-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HERO a související bloky -->
+    <section class="hero">
+        <div class="container">
+            
+            <img src="https://i.ibb.co/5WDVXdv7/20250708-1114-Glossy-Logo-Enhancement-remix-01jzmmwte4eehtg5w55dgz0xft.png" alt="Logo" height="120">
+
+            <h1>STOP únavě a vyčerpání! Objevte konečně způsob, jak získat zpět energii, dobít baterky a cítit se každý den skvěle!</h1>
+            <p class="subtitle">Objevte sílu 100% čisté BIO RAW Aloe Vera šťávy a nastartujte své tělo zevnitř, jako nikdy předtím.</p>
+            <a href="#pricing-section" class="cta-button">
+                <span class="cta-button-text">Chci zpět svou energii</span>
+            </a>
+        </div>
+    </section>
+    <section class="solution-section">
+        <div class="container">
+            <div class="solution-image">
+            
+                <img src="https://www.iportret.cz/user/documents/upload/20250708_0953_Organic Aloe Animation_simple_compose_01jzmgdphwe84tmeqdf1xze8wd.gif" alt="Čerstvá rostlina Aloe Vera">
+            </div>
+            <div class="solution-text">
+                <h2>Řešení z čisté přírody</h2>
+                <p>Naše BEWIT BIO RAW Aloe Vera šťáva není jen obyčejný nápoj. Je to elixír plný života, který vaše tělo harmonizuje a dodá mu přesně to, co potřebuje.</p>
+                <ul>
+                    <li><strong>Maximální síla živin:</strong> Díky BIO & RAW kvalitě a zpracování za studena dostane vaše tělo všechny cenné enzymy a vitamíny neporušené.</li>
+                    <li><strong>Podpoříte své trávení:</strong> Poctivé kusy dužiny dodají vašemu tělu potřebnou vlákninu pro zdravá střeva a maximální účinek.</li>
+                    <li><strong>Zklidníte své zažívání:</strong> Účinně pomáhá harmonizovat trávicí trakt a obnovuje vaši přirozenou střevní mikroflóru.</li>
+                    <li><strong>Nastartujete novou energii:</strong> Jemně detoxikuje vaše tělo, zbaví vás únavy a přirozeně zvýší vaši každodenní vitalitu.</li>
+                    <li><strong>Rozzáříte svou pleť a vlasy:</strong> Hloubková hydratace zevnitř se brzy projeví na zdravějším a svěžejším vzhledu vaší pleti.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="video-section">
+        <div class="container">
+            <h2>Příběh naší Aloe Vera</h2>
+            <p class="subtitle">Od sluncem zalité plantáže až k vám domů. V každé lahvi je kus poctivé práce a naší lásky k přírodě. Podívejte se sami.</p>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/6i4FQd7WF2E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. GRAF -->
+    <section class="graph-section">
+        <div class="container">
+            <h2>Dle zkušeností našich zákazníků, <strong style="color: #c3a137;">85 %</strong> z nich pocítilo výrazný nárůst energie a životního elánu <strong style="color: #c3a137;">již během prvního měsíce.</strong></h2>
+            <div class="chart-container">
+                <div class="chart-wrapper">
+                    <svg class="chart-svg" width="100%" height="250" viewBox="0 0 700 250">
+                        <line class="axis" x1="40" y1="20" x2="40" y2="210"></line>
+                        <line class="axis" x1="40" y1="210" x2="560" y2="210"></line>
+                        <text class="axis-label y-axis-label" x="40" y="15">ÚROVEŇ ENERGIE</text>
+                        <text class="axis-label" x="50" y="235">Start</text>
+                        <text class="axis-label" text-anchor="end" x="550" y="235">1 Měsíc</text>
+                        <path id="energy-path" class="chart-path" d="M 50,180 C 150,180 300,50 550,50"></path>
+                        <circle class="chart-point" cx="50" cy="180" r="8"></circle>
+                        <circle class="chart-point" cx="550" cy="50" r="8"></circle>
+                        <circle class="animated-point" r="10"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TESTIMONIÁLY a související bloky -->
+    <section class="quality-banner-section">
+        <div class="container">
+            <div class="quality-banner-content">
+                <div class="flag-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/255px-Flag_of_the_Czech_Republic.svg.png" alt="Česká vlajka">
+                </div>
+                <div class="quality-text">
+                    <h2>Srdce z Ostravy</h2>
+                    <p>Každá lahev naší Aloe Vera je výsledkem poctivé české práce. Přesně víme, co vám dáváme, protože na celý proces výroby dohlížíme osobně v našem areálu v Ostravě.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="testimonial-section">
+        <h2>Co říkají ti, kteří už svou energii našli?</h2>
+        <div class="testimonial-carousel-container">
+            <div class="testimonial-carousel">
+                <!-- SADA 1: 10 UNIKÁTNÍCH TESTIMONIÁLŮ -->
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Po měsíci užívání jsem jako vyměněná. Odpolední únava je pryč a konečně mám energii si po práci jít zaběhat. A to nemluvím o tom, jak se mi zlepšilo trávení."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/11.jpg" alt="Jana P."><div class="author-info"><strong>Jana P.</strong><span>Brno</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Byl jsem skeptický, ale zkusil jsem to na doporučení. Nejlepší rozhodnutí! Cítím se lehčí, nejsem tak nafouklý a mám víc síly na cvičení. Chutná skvěle!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Petr N."><div class="author-info"><strong>Petr N.</strong><span>Praha</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Měla jsem dlouhodobé problémy s pletí. Aloe od BEWIT piju každé ráno a moje pleť je konečně čistá a hydratovaná. Je to malý zázrak v lahvi."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Eva D."><div class="author-info"><strong>Eva D.</strong><span>Ostrava</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Doporučuji všem, co sedí celý den v kanceláři. Dodá to tu správnou jiskru a pomůže s trávením. Za mě TOP produkt, objednávám rovnou měsíční kúru."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Tomáš K."><div class="author-info"><strong>Tomáš K.</strong><span>Plzeň</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Skvělá chuť, žádná pachuť jako u jiných značek. Cítím se skvěle, plná energie. Je to můj ranní rituál, bez kterého si už nedovedu představit den."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Lucie S."><div class="author-info"><strong>Lucie S.</strong><span>Liberec</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Můj imunitní systém mi děkuje. Tuto zimu jsem nebyl ani jednou nemocný, což se mi nestalo roky. Věřím, že je to díky pravidelnému pití této Aloe."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/66.jpg" alt="Martin V."><div class="author-info"><strong>Martin V.</strong><span>Č. Budějovice</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Konečně něco, co funguje na mé zažívání. Zkoušela jsem všechno možné, ale až tato šťáva s dužinou mi opravdu pomohla. Objednávám znovu!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/77.jpg" alt="Aneta R."><div class="author-info"><strong>Aneta R.</strong><span>Hradec Králové</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Jako sportovec hledám přírodní cesty, jak podpořit regeneraci. Aloe od BEWIT je přesně to, co jsem hledal. Méně únavy, rychlejší zotavení. Super!"</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/88.jpg" alt="David F."><div class="author-info"><strong>David F.</strong><span>Pardubice</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Naprostá spokojenost. Cítím se lépe, mám více energie a celkově je to pro tělo balzám. Vřele doporučuji, kvalita je opravdu znát."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/9.jpg" alt="Kateřina V."><div class="author-info"><strong>Kateřina V.</strong><span>Olomouc</span></div></div></div>
+                <div class="testimonial-card"><div class="star-rating"><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg><svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.539 1.118l-3.368-2.448a1 1 0 00-1.175 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.301 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg></div><p>"Produkt, který splnil má očekávání na 100 %. Po třech týdnech cítím mnohem méně únavy po práci a celkově se cítím lépe. Určitě budu pokračovat."</p><div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/10.jpg" alt="Lukáš M."><div class="author-info"><strong>Lukáš M.</strong><span>Zlín</span></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FORMULÁŘE -->
+    <section id="pricing-section" class="pricing-section">
+        <div class="container">
+            <div class="timer-wrapper">
+                <span class="timer-text">Tato limitovaná nabídka končí za:</span>
+                <span class="countdown-timer-display"></span>
+            </div>
+            <h2>Vyberte si svůj startovní balíček</h2>
+            <p class="subtitle">Udělejte první krok ještě dnes. S naší exkluzivní nabídkou získáte vše, co potřebujete pro úspěšný start za nejlepší cenu.</p>
+            <div class="pricing-grid">
+                <!-- KARTA 1: NA ZKOUŠKU -->
+                <div class="pricing-card">
+                    <div class="pricing-card-content">
+                        <h3>Na Zkoušku</h3>
+                        <div class="price">277 Kč <span class="old-price">537 Kč</span></div>
+                        <p class="price-note">+ 50 Kč doprava</p>
+                        <ul>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg><div>1x BIO RAW Aloe Vera šťáva</div></li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" /></svg><div>Akční sleva 260 Kč</div></li>
+                            <li class="disabled"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg><div>E-book o Aloe Vera</div></li>
+                            <li class="disabled"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg><div>Zdarma vstupenku na exkurzi</div></li>
+                        </ul>
+                    </div>
+                    <a class="cta-button pricing-button" data-package="sampler">Vybrat</a>
+                </div>
+                <div class="pricing-card recommended">
+                    <div class="ribbon-wrapper"><div class="ribbon-text">OBLÍBENÁ VOLBA</div></div>
+                    <div class="pricing-card-content">
+                        <h3>Měsíční Kúra</h3>
+                        <div class="price">831 Kč <span class="old-price">2198 Kč</span></div>
+                        <p class="price-note">Nejlepší hodnota & výsledky</p>
+                        <ul>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" /></svg><div><strong>4x</strong> BIO RAW Aloe Vera šťáva <span class="free-bottle-text">(1 lahev ZDARMA)</span></div></li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-1.875a3.375 3.375 0 003.375-3.375h1.5a1.125 1.125 0 011.125 1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" /></svg><div><strong>Doprava ZDARMA</strong></div></li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg><div><strong>Bonus:</strong> E-book o Aloe Vera</div></li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg><div><strong>Bonus:</strong> Zdarma vstupenku na exkurzi ve výrobě v Ostravě</div></li>
+                        </ul>
+                    </div>
+                    <a class="cta-button pricing-button" data-package="cure">Získat kúru se slevou <span class="savings-highlight">1367 Kč</span></a>
+                </div>
+            </div>
+            <div class="consultation-box">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" alt="Markéta, BEWIT specialistka" class="consultation-photo">
+                <div class="consultation-text">
+                    <h3>Nevíte si rady s výběrem?</h3>
+                    <p>Zavolejte naší specialistce Markétě, ráda vám poradí, který balíček je pro vás ten pravý.</p>
+                    <div class="consultation-phone">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                        <a href="tel:+420123456789">+420 123 456 789</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="order-form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="timer-wrapper">
+                    <span class="timer-text">Tato limitovaná nabídka končí za:</span>
+                    <span class="countdown-timer-display"></span>
+                </div>
+                <h2>Dokončete svou objednávku</h2>
+                <div class="package-selector">
+                    <input type="radio" id="package-sampler" name="package" value="sampler">
+                    <label for="package-sampler">Na zkoušku</label>
+                    <input type="radio" id="package-cure" name="package" value="cure" checked>
+                    <label for="package-cure">Měsíční kúra</label>
+                </div>
+                <p class="price-summary">
+                    Celkem: <span class="final-price" id="total-price"></span>
+                    <span class="old-price-summary" id="old-total-price"></span>
+                </p>
+                <form action="#">
+                    <div class="form-row">
+                        <div class="form-group"><input type="text" name="firstname" placeholder="Jméno" required></div>
+                        <div class="form-group"><input type="text" name="lastname" placeholder="Příjmení" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><input type="email" name="email" placeholder="E-mail" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><input type="tel" name="phone" placeholder="Telefonní číslo" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><input type="text" name="address" placeholder="Doručovací adresa (Ulice a č.p., Město, PSČ)" required></div>
+                    </div>
+                    <div class="payment-methods">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Mastercard">
+                        <span><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Pay" style="height: 22px; filter: grayscale(0); opacity: 1;">Pay</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="Google Pay">
+                    </div>
+                    <button type="submit" class="cta-button" id="order-button">
+                        <span id="order-button-text"></span>
+                    </button>
+                    <p class="security-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>
+                        Vaše data jsou v bezpečí. Odesláním souhlasíte s obchodními podmínkami.
+                    </p>
+                    <p class="guarantee-info">
+                        <strong>GARANCE SPOKOJENOSTI:</strong> Pokud nebudete po 14 dnech cítit žádný rozdíl, vrátíme vám peníze.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. GARANCE A FAQ -->
+    <section class="guarantee-section">
+        <div class="container">
+            <div class="guarantee-box">
+                <div class="guarantee-seal">
+                    <div class="solution-image">
+            
+                        <img src="https://www.iportret.cz/user/documents/upload/5a0ad9ac5a997e1c2cea1106.png">
+                    </div>
+                   <!--   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" /></svg>
+                    <span>100% GARANCE SPOKOJENOSTI</span>-->
+                </div>
+                <div class="guarantee-text">
+                    <h3>Vyzkoušejte kúru zcela bez rizika</h3>
+                    <p>Jsme si kvalitou naší Aloe tak jistí, že vám nabízíme 14denní garanci vrácení peněz. Pokud nebudete z jakéhokoliv důvodu spokojeni, vrátíme vám plnou částku. Bez zbytečných otázek.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="faq-section">
+        <div class="container">
+            <h2>Často kladené otázky</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Jaké je doporučené dávkování?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Doporučujeme pít 25 ml šťávy 2-3x denně, ideálně půl hodiny před jídlem. Můžete ji pít samotnou nebo zředěnou vodou či džusem. Před použitím lahev vždy dobře protřepejte.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Jak šťáva chutná?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Naše BIO RAW šťáva má čistou, lehce nahořklou a specifickou chuť typickou pro čerstvou aloe. Díky tomu, že neobsahuje žádné přidané cukry ani aromata, poznáte skutečnou chuť přírody. Kusy dužiny dodávají příjemnou texturu.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Jak dlouho mám kúru užívat?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Pro nejlepší výsledky doporučujeme minimálně měsíční kúru (4 lahve), aby mělo tělo dostatek času na detoxikaci a regeneraci. Mnoho našich zákazníků ji však pije pravidelně jako součást zdravého životního stylu.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Jak mám šťávu skladovat?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Neotevřenou lahev skladujte na tmavém a chladném místě. Po otevření ji uchovávejte v chladničce a spotřebujte do 21 dnů, aby byla zaručena maximální čerstvost a účinnost.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Je produkt vhodný i pro těhotné a kojící ženy?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Vnitřní užívání aloe vera se obecně v těhotenství a při kojení nedoporučuje. Vždy doporučujeme konzultovat užívání jakýchkoliv doplňků stravy se svým ošetřujícím lékařem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PATIČKA -->
+    <footer>
+        <p>&copy; 2024 BEWIT.LOVE s.r.o. | Toto je marketingová stránka. Pro kompletní sortiment navštivte <a href="https://bewit.love">bewit.love</a>.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+      
+            // Sjednocený JavaScript pro všechny interaktivní prvky
+            
+            // 1. Logika pro přepínání balíčků a časovač
+            const packageRadios = document.querySelectorAll('input[name="package"]');
+            const pricingButtons = document.querySelectorAll('.pricing-button');
+            const totalPriceEl = document.getElementById('total-price');
+            const oldTotalPriceEl = document.getElementById('old-total-price');
+            const orderButtonTextEl = document.getElementById('order-button-text');
+            const orderFormSection = document.getElementById('order-form-section');
+            const countdownElements = document.querySelectorAll('.countdown-timer-display');
+
+            if (packageRadios.length > 0) {
+                const prices = {
+                    sampler: { 
+                        final: 327, // 277 + 50
+                        old: 587,   // 537 + 50
+                        buttonText: 'Ano, objednávám se slevou <span class="savings-highlight">260 Kč</span>' 
+                    },
+                    cure: { 
+                        final: 831,  // 3 * 277
+                        old: 2198,   // 4 * 537 + 50
+                        buttonText: 'Ano, objednávám se slevou <span class="savings-highlight">1367 Kč</span>' 
+                    }
+                };
+
+                function updatePrice() {
+                    const selectedPackage = document.querySelector('input[name="package"]:checked').value;
+                    const data = prices[selectedPackage];
+                    
+                    if (totalPriceEl && oldTotalPriceEl && orderButtonTextEl) {
+                        totalPriceEl.innerText = `${data.final} Kč`;
+                        oldTotalPriceEl.innerText = `${data.old} Kč`;
+                        orderButtonTextEl.innerHTML = data.buttonText;
+                    }
+                }
+                
+                packageRadios.forEach(radio => radio.addEventListener('change', updatePrice));
+
+                pricingButtons.forEach(button => {
+                    button.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        const selectedPackage = this.getAttribute('data-package');
+                        
+                        document.getElementById(`package-${selectedPackage}`).checked = true;
+                        updatePrice();
+                        if (orderFormSection) {
+                            orderFormSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+                
+                updatePrice();
+            }
+
+            if (countdownElements.length > 0) {
+                const twelveHours = 12 * 60 * 60 * 1000;
+                const endTime = new Date().getTime() + twelveHours;
+
+                const countdownInterval = setInterval(function() {
+                    const now = new Date().getTime();
+                    const distance = endTime - now;
+                    let hours, minutes, seconds;
+
+                    if (distance < 0) {
+                        clearInterval(countdownInterval);
+                        hours = "00"; minutes = "00"; seconds = "00";
+                    } else {
+                        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    }
+
+                    const formattedTime = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                    
+                    countdownElements.forEach(el => { el.innerHTML = formattedTime; });
+                }, 1000);
+            }
+
+            // 2. Logika pro FAQ akordeon
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                if (question) {
+                    question.addEventListener('click', () => {
+                        const currentlyActive = document.querySelector('.faq-item.active');
+                        if (currentlyActive && currentlyActive !== item) {
+                            currentlyActive.classList.remove('active');
+                        }
+                        item.classList.toggle('active');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
